@@ -27,8 +27,6 @@ public class MainTestRunner {
         ArrayList<HashMap<String, String>> results = new ArrayList<>();
         testsToExecute.add(new GetBlocksTest());
 
-        testsToExecute.forEach(test -> results.add(test.executeTest(callerService, rpcUrl)));
-
         boolean chainIsNotProducing = true;
 
         GetBlockCountCmd cmd = new GetBlockCountCmd();
@@ -43,6 +41,8 @@ public class MainTestRunner {
             }
             Thread.sleep(10000L);
         }
+
+        testsToExecute.forEach(test -> results.add(test.executeTest(callerService, rpcUrl)));
 
         LOG.info("----------------------------- TEST FINISHED --------------------------------------------");
         LOG.info("-----------------------------               --------------------------------------------");
