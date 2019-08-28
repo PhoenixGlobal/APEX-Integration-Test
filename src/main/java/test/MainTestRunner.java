@@ -30,10 +30,11 @@ public class MainTestRunner {
 
         GetBlockByHeightCmd cmd = new GetBlockByHeightCmd(12);
         while (chainIsNotProducing){
-            String response = callerService.postRequest(rpcUrl, cmd);
-            if(response.contains("\"status\":200") && response.contains("\"succeed\":true")){
-                chainIsNotProducing = false;
-            } else {
+            try {
+                String response = callerService.postRequest(rpcUrl, cmd);
+                if (response.contains("\"status\":200") && response.contains("\"succeed\":true"))
+                    chainIsNotProducing = false;
+            } catch (Exception e){
                 Thread.sleep(10000L);
             }
         }
