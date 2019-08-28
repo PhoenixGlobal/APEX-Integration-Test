@@ -80,7 +80,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.apex.bot.SpamBot</mainClass>
+                            <mainClass>test.MainTestRunner</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
