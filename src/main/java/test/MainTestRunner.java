@@ -35,12 +35,11 @@ public class MainTestRunner {
         while (chainIsNotProducing){
             try {
                 String response = callerService.postRequest(rpcUrl, cmd);
-                LOG.info("Block count message was:");
-                LOG.info("\n" + response);
+                LOG.info("Waiting for chain to start producing.");
                 if (!response.contains("\"result\":\"0\""))
                     chainIsNotProducing = false;
             } catch (Exception e){
-                LOG.warn("Chain not ready yet. Will wait");
+                LOG.error("Something went wrong. Is RPC configured properly?");
             }
             Thread.sleep(10000L);
         }
