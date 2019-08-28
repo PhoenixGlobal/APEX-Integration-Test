@@ -32,9 +32,11 @@ public class MainTestRunner {
         while (chainIsNotProducing){
             try {
                 String response = callerService.postRequest(rpcUrl, cmd);
+                LOG.info(response);
                 if (response.contains("\"status\":200") && response.contains("\"succeed\":true"))
                     chainIsNotProducing = false;
             } catch (Exception e){
+                LOG.warn("Chain not ready yet. Will wait");
                 Thread.sleep(10000L);
             }
         }
