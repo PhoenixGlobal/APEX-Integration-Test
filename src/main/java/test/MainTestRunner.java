@@ -1,6 +1,5 @@
 package test;
 
-import message.request.cmd.GetBlockByHeightCmd;
 import message.request.cmd.GetBlockCountCmd;
 import message.util.RequestCallerService;
 import org.slf4j.Logger;
@@ -20,6 +19,9 @@ public class MainTestRunner {
         final String privKeySender = args[0];
         final String addressReceiver = args[1];
         final String rpcUrl = args[2];
+        LOG.info(privKeySender);
+        LOG.info(addressReceiver);
+        LOG.info(rpcUrl);
         final RequestCallerService callerService = new RequestCallerService();
         ArrayList<IRunTestCase> testsToExecute = new ArrayList<>();
         ArrayList<HashMap<String, String>> results = new ArrayList<>();
