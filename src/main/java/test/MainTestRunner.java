@@ -1,6 +1,7 @@
 package test;
 
 import message.request.cmd.GetBlockByHeightCmd;
+import message.request.cmd.GetBlockCountCmd;
 import message.util.RequestCallerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,17 +29,18 @@ public class MainTestRunner {
 
         boolean chainIsNotProducing = true;
 
-        GetBlockByHeightCmd cmd = new GetBlockByHeightCmd(12);
+        GetBlockCountCmd cmd = new GetBlockCountCmd();
         while (chainIsNotProducing){
             try {
                 String response = callerService.postRequest(rpcUrl, cmd);
-                LOG.info(response);
-                if (response.contains("\"status\":200") && response.contains("\"succeed\":true"))
+                LOG.info("Block count message was:");
+                LOG.info("\n" + response);
+                if (!response.contains("\"result\":\"0\""))
                     chainIsNotProducing = false;
             } catch (Exception e){
                 LOG.warn("Chain not ready yet. Will wait");
-                Thread.sleep(10000L);
             }
+            Thread.sleep(10000L);
         }
 
         LOG.info("----------------------------- TEST FINISHED --------------------------------------------");
