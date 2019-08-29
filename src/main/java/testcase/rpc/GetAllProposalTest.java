@@ -9,14 +9,14 @@ import java.util.HashMap;
 public class GetAllProposalTest implements IRunTestCase {
 
     @Override
-    public HashMap<String, String> executeTest(RequestCallerService caller, String rpcUrl) {
+    public HashMap<String, String> executeTest(RequestCallerService caller, String rpcUrl1, String rpcUrl2) {
         HashMap<String, String> testResult = new HashMap<>();
         testResult.put("name", "GetAllProposalCmd Test");
         testResult.put("status", "ERROR");
         testResult.put("message", "Test failed");
         try {
             final GetAllProposalCmd cmd = new GetAllProposalCmd();
-            final String response = caller.postRequest(rpcUrl, cmd);
+            final String response = caller.postRequest(rpcUrl1, cmd);
             if(response.contains("\"status\":200") && response.contains("\"succeed\":true") && response.contains("\"proposals\"")){
                 testResult.put("status", "SUCCESS");
                 testResult.put("message", "All tests executed as expected");

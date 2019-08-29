@@ -23,11 +23,11 @@ public class MainTestRunner {
         Required objects
          */
         final String privKeySender = args[0];
-        final String addressReceiver = args[1];
-        final String rpcUrl = args[2];
-        LOG.info(privKeySender);
-        LOG.info(addressReceiver);
-        LOG.info(rpcUrl);
+        final String address1 = args[1];
+        final String rpcUrl1 = args[2];
+        final String address2 = args[3];
+        final String rpcUrl2 = args[4];
+
         final RequestCallerService callerService = new RequestCallerService();
         ArrayList<IRunTestCase> testsToExecute = new ArrayList<>();
         ArrayList<HashMap<String, String>> results = new ArrayList<>();
@@ -38,7 +38,7 @@ public class MainTestRunner {
         testsToExecute.add(new GetBlocksTest());
         testsToExecute.add(new GetAllProposalTest());
         testsToExecute.add(new GetAllProposalVotesTest());
-        testsToExecute.add(new GetAccountTest(addressReceiver));
+        testsToExecute.add(new GetAccountTest(address1));
 
         /*
         Wait until the chain produces blocks
@@ -47,7 +47,7 @@ public class MainTestRunner {
         GetBlockCountCmd cmd = new GetBlockCountCmd();
         while (chainIsNotProducing){
             try {
-                String response = callerService.postRequest(rpcUrl, cmd);
+                String response = callerService.postRequest(rpcUrl1, cmd);
                 LOG.info("Waiting for chain to start producing.");
                 if (!response.contains("\"result\":\"0\""))
                     chainIsNotProducing = false;
@@ -61,7 +61,7 @@ public class MainTestRunner {
         /*
         Execute all tests
          */
-        testsToExecute.forEach(test -> results.add(test.executeTest(callerService, rpcUrl)));
+        testsToExecute.forEach(test -> results.add(test.executeTest(callerService, rpcUrl1, rpcUrl2)));
 
         /*
         Log results
