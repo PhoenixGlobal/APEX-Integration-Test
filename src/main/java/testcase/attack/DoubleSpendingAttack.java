@@ -129,7 +129,7 @@ public class DoubleSpendingAttack implements IRunTestCase {
             /*
             Make sure balance increased less than the value of both transactions
              */
-            if(balanceReceiver.add(new BigDecimal(2000L)).compareTo(balanceReceiverUpdated) < 1){
+            if(balanceReceiver.add(new BigDecimal(2000L)).compareTo(balanceReceiverUpdated) < 0){
                 throw new Exception("Double spending detected");
             }
 
