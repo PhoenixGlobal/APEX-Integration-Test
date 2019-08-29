@@ -4,6 +4,7 @@ import message.request.cmd.GetBlockCountCmd;
 import message.util.RequestCallerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import testcase.attack.DoubleSpendingAttack;
 import testcase.rpc.GetAccountTest;
 import testcase.rpc.GetAllProposalTest;
 import testcase.rpc.GetAllProposalVotesTest;
@@ -39,6 +40,7 @@ public class MainTestRunner {
         testsToExecute.add(new GetAllProposalTest());
         testsToExecute.add(new GetAllProposalVotesTest());
         testsToExecute.add(new GetAccountTest(address1));
+        testsToExecute.add(new DoubleSpendingAttack(privKeySender, address1));
 
         /*
         Wait until the chain produces blocks
