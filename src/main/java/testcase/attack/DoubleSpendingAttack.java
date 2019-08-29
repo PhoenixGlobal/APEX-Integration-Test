@@ -38,6 +38,7 @@ public class DoubleSpendingAttack implements IRunTestCase {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public HashMap<String, String> executeTest(RequestCallerService caller, String rpcUrl1, String rpcUrl2) {
 
         HashMap<String, String> testResult = new HashMap<>();
