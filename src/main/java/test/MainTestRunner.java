@@ -4,6 +4,7 @@ import message.request.cmd.GetBlockCountCmd;
 import message.util.RequestCallerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import testcase.rpc.GetAccountTest;
 import testcase.rpc.GetBlocksTest;
 import testcase.IRunTestCase;
 
@@ -26,9 +27,9 @@ public class MainTestRunner {
         ArrayList<IRunTestCase> testsToExecute = new ArrayList<>();
         ArrayList<HashMap<String, String>> results = new ArrayList<>();
         testsToExecute.add(new GetBlocksTest());
+        testsToExecute.add(new GetAccountTest(addressReceiver));
 
         boolean chainIsNotProducing = true;
-
         GetBlockCountCmd cmd = new GetBlockCountCmd();
         while (chainIsNotProducing){
             try {
@@ -45,20 +46,23 @@ public class MainTestRunner {
 
         testsToExecute.forEach(test -> results.add(test.executeTest(callerService, rpcUrl)));
 
-        LOG.info("----------------------------- TEST FINISHED --------------------------------------------");
-        LOG.info("-----------------------------               --------------------------------------------");
-        LOG.info("-----------------------------               --------------------------------------------");
+        LOG.info("----------------------------- TEST FINISHED -----------------------------");
+        LOG.info("-----------------------------               -----------------------------");
+        LOG.info("-----------------------------               -----------------------------");
+        LOG.info("\n\n");
         results.forEach(result -> {
             if(result.get("status").equals("error")){
-                LOG.error("Name: " + result.get("name") + "               Status: " + result.get("status"));
-                LOG.error("Error message :" + result.get("message"));
+                LOG.error("Name: " + result.get("name") + " Status: " + result.get("status"));
+                LOG.error("Test message :" + result.get("message"));
             } else {
-                LOG.info("Name: " + result.get("name") + "               Status: " + result.get("status"));
+                LOG.info("Name: " + result.get("name") + " Status: " + result.get("status"));
+                LOG.info("Test Message: " + result.get("message"));
             }
+            LOG.info("\n\n");
         });
-        LOG.info("----------------------------------------------------------------------------------------");
-        LOG.info("----------------------------------------------------------------------------------------");
-        LOG.info("----------------------------------------------------------------------------------------");
+        LOG.info("-------------------------------------------------------------------------");
+        LOG.info("-------------------------------------------------------------------------");
+        LOG.info("-------------------------------------------------------------------------");
     }
 
 }
