@@ -1,7 +1,8 @@
-package testcase;
+package testcase.rpc;
 
 import message.request.cmd.GetBlocksCmd;
 import message.util.RequestCallerService;
+import testcase.IRunTestCase;
 
 import java.util.HashMap;
 

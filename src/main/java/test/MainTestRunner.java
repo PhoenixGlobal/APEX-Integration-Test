@@ -4,7 +4,7 @@ import message.request.cmd.GetBlockCountCmd;
 import message.util.RequestCallerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import testcase.GetBlocksTest;
+import testcase.rpc.GetBlocksTest;
 import testcase.IRunTestCase;
 
 import java.util.ArrayList;
@@ -36,10 +36,11 @@ public class MainTestRunner {
                 LOG.info("Waiting for chain to start producing.");
                 if (!response.contains("\"result\":\"0\""))
                     chainIsNotProducing = false;
+                else Thread.sleep(30000L);
             } catch (Exception e){
                 LOG.error("Something went wrong. Is RPC configured properly?");
+                Thread.sleep(30000L);
             }
-            Thread.sleep(10000L);
         }
 
         testsToExecute.forEach(test -> results.add(test.executeTest(callerService, rpcUrl)));
