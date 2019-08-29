@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import test.MainTestRunner;
 import testcase.IRunTestCase;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.interfaces.ECPrivateKey;
 import java.time.Instant;
@@ -70,7 +71,7 @@ public class DoubleSpendingAttack implements IRunTestCase {
             Current Status
              */
             final long nonce = (int) responseMapSender.get("nextNonce");
-            final double balanceReceiver = Double.parseDouble((String) responseMapReciever.get("balance"));
+            final BigDecimal balanceReceiver = BigDecimal.valueOf(Double.parseDouble((String) responseMapReciever.get("balance")));
 
             /*
             Create Transaction
@@ -123,14 +124,12 @@ public class DoubleSpendingAttack implements IRunTestCase {
              */
             responseAccReceiver = writer.getObjectFromString(ExecResult.class, caller.postRequest(rpcUrl1, getAccountCmdReciever));
             responseMapReciever = (HashMap<String, Object>) responseAccReceiver.getResult();
-            final double balanceReceiverUpdated = Double.parseDouble((String) responseMapReciever.get("balance"));
+            final BigDecimal balanceReceiverUpdated = BigDecimal.valueOf(Double.parseDouble((String) responseMapReciever.get("balance")));
 
             /*
             Make sure balance increased less than the value of both transactions
              */
-            System.out.println(balanceReceiver);
-            System.out.println(balanceReceiverUpdated);
-            if(!(balanceReceiver + 2000 > balanceReceiverUpdated)){
+            if(balanceReceiver.add(new BigDecimal(2000L)).compareTo(balanceReceiverUpdated) < 1){
                 throw new Exception("Double spending detected");
             }
 
