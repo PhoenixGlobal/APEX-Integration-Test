@@ -1,31 +1,23 @@
 package testcase.rpc;
 
-import message.request.cmd.GetAccountCmd;
+import message.request.cmd.GetAllProposalVotesCmd;
 import message.util.RequestCallerService;
 import testcase.IRunTestCase;
 
 import java.util.HashMap;
 
-public class GetAccountTest implements IRunTestCase {
-
-    private String address;
-
-    public GetAccountTest(String address){
-        this.address = address;
-    }
+public class GetAllProposalVotesTest implements IRunTestCase {
 
     @Override
     public HashMap<String, String> executeTest(RequestCallerService caller, String rpcUrl) {
         HashMap<String, String> testResult = new HashMap<>();
-        testResult.put("name", "GetAccountCmd Test");
+        testResult.put("name", "GetAllProposalVotesCmd Test");
         testResult.put("status", "ERROR");
         testResult.put("message", "Test failed");
         try {
-            final GetAccountCmd cmd = new GetAccountCmd(address);
-            final GetAccountCmd cmdWrong = new GetAccountCmd(address + "b");
+            final GetAllProposalVotesCmd cmd = new GetAllProposalVotesCmd();
             final String response = caller.postRequest(rpcUrl, cmd);
-            final String responseBad = caller.postRequest(rpcUrl, cmdWrong);
-            if(response.contains("\"status\":200") && response.contains(address) && responseBad.contains("\"status\":400")){
+            if(response.contains("\"status\":200") && response.contains("\"succeed\":true") && response.contains("\"votes\"")){
                 testResult.put("status", "SUCCESS");
                 testResult.put("message", "All tests executed as expected");
             }

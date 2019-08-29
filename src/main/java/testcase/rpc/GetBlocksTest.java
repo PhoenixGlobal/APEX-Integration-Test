@@ -12,13 +12,13 @@ public class GetBlocksTest implements IRunTestCase {
     public HashMap<String, String> executeTest(RequestCallerService caller, String rpcUrl) {
         HashMap<String, String> testResult = new HashMap<>();
         testResult.put("name", "GetBlocksCmd Test");
-        testResult.put("status", "error");
-        testResult.put("message", "Statuscode was not 200");
+        testResult.put("status", "ERROR");
+        testResult.put("message", "Test failed");
         try {
             final GetBlocksCmd cmd = new GetBlocksCmd();
             final String response = caller.postRequest(rpcUrl, cmd);
-            if(response.contains("\"status\":200") && response.contains("\"succeed\":true")){
-                testResult.put("status", "success");
+            if(response.contains("\"status\":200") && response.contains("\"succeed\":true") && response.contains("\"hash\"")){
+                testResult.put("status", "SUCCESS");
                 testResult.put("message", "All tests executed as expected");
             }
         } catch (Exception e){

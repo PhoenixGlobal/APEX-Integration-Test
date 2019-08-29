@@ -5,6 +5,8 @@ import message.util.RequestCallerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import testcase.rpc.GetAccountTest;
+import testcase.rpc.GetAllProposalTest;
+import testcase.rpc.GetAllProposalVotesTest;
 import testcase.rpc.GetBlocksTest;
 import testcase.IRunTestCase;
 
@@ -17,6 +19,9 @@ public class MainTestRunner {
 
     public static void main (String [] args) throws Exception {
 
+        /*
+        Required objects
+         */
         final String privKeySender = args[0];
         final String addressReceiver = args[1];
         final String rpcUrl = args[2];
@@ -26,9 +31,18 @@ public class MainTestRunner {
         final RequestCallerService callerService = new RequestCallerService();
         ArrayList<IRunTestCase> testsToExecute = new ArrayList<>();
         ArrayList<HashMap<String, String>> results = new ArrayList<>();
+
+        /*
+        Add TestCases to execution List
+         */
         testsToExecute.add(new GetBlocksTest());
+        testsToExecute.add(new GetAllProposalTest());
+        testsToExecute.add(new GetAllProposalVotesTest());
         testsToExecute.add(new GetAccountTest(addressReceiver));
 
+        /*
+        Wait until the chain produces blocks
+         */
         boolean chainIsNotProducing = true;
         GetBlockCountCmd cmd = new GetBlockCountCmd();
         while (chainIsNotProducing){
@@ -44,8 +58,14 @@ public class MainTestRunner {
             }
         }
 
+        /*
+        Execute all tests
+         */
         testsToExecute.forEach(test -> results.add(test.executeTest(callerService, rpcUrl)));
 
+        /*
+        Log results
+         */
         LOG.info("----------------------------- TEST FINISHED -----------------------------");
         LOG.info("-----------------------------               -----------------------------");
         LOG.info("-----------------------------               -----------------------------");
