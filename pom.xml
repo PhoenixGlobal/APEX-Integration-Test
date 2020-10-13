@@ -10,7 +10,7 @@
 
     <properties>
         <logback.version>1.2.3</logback.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <apex.sdk.version>870ae70216328b8531f2856740b49aff3f386f3e</apex.sdk.version>
     </properties>
 
